@@ -260,13 +260,7 @@
       font-size: 1.25rem;
       color: var(--accent-yellow);
       transform: rotate(-2deg);
-    }
-
-    .bio-quote {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-      font-style: italic;
+      margin-top: 2px;
     }
 
     /* Lista de Enlaces */
@@ -310,33 +304,6 @@
       text-align: center;
     }
 
-    /* Redes sociales inferiores */
-    .social-row {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 24px;
-    }
-
-    .social-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--paper-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      text-decoration: none;
-      transition: 0.2s;
-    }
-
-    .social-btn:hover {
-      background: var(--accent);
-      transform: translateY(-3px);
-    }
-
     /* Tarjetas de notas */
     .note-card {
       background: rgba(255, 255, 255, 0.03);
@@ -348,7 +315,7 @@
 
     .note-card h3 {
       font-size: 1rem;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       color: var(--accent-blue);
       display: flex;
       align-items: center;
@@ -361,24 +328,10 @@
       color: #d1d5db;
     }
 
-    .sticky-note {
-      background: #fef08a;
-      color: #1e293b;
-      padding: 12px 16px;
-      border-radius: 4px;
-      font-family: var(--font-hand);
-      font-size: 1.3rem;
-      line-height: 1.3;
-      transform: rotate(1deg);
-      box-shadow: 2px 4px 10px rgba(0,0,0,0.3);
-      margin-top: 16px;
-    }
-
     .tags-container {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 8px;
     }
 
     .tag {
@@ -424,8 +377,8 @@
     </button>
   </div>
 
-  <!-- Audio vinculado a tu archivo subido -->
-  <audio id="bgAudio" loop src="ajrinertia.mp3"></audio>
+  <!-- Audio -->
+  <audio id="bgAudio" loop src="ajrinertia.mp3" preload="auto"></audio>
 
   <div class="notebook">
     <!-- Espirales decorativas -->
@@ -463,7 +416,6 @@
           Inertia-afk <i class="fa-solid fa-circle-check" style="color:#61afef; font-size:1rem;"></i>
         </h1>
         <span class="handwritten-badge">página de notas ✏️</span>
-        <p class="bio-quote">"Where do I belong? I'm an object in motion..."</p>
       </div>
 
       <div class="links-group">
@@ -476,7 +428,7 @@
           <i class="fa-solid fa-arrow-right"></i>
         </a>
 
-        <!-- Música favorita (Canal oficial de AJR) -->
+        <!-- Música favorita (AJR) -->
         <a href="https://www.youtube.com/@AJR" target="_blank" class="link-item">
           <div class="link-left">
             <i class="fa-brands fa-youtube" style="color: #FF0000;"></i>
@@ -494,31 +446,19 @@
           <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
-
-      <!-- Iconos inferiores preparados para tus futuras redes -->
-      <div class="social-row">
-        <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" class="social-btn"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="#" class="social-btn"><i class="fa-brands fa-tiktok"></i></a>
-        <a href="#" class="social-btn"><i class="fa-brands fa-twitch"></i></a>
-      </div>
     </div>
 
     <!-- 2. PESTAÑA SOBRE MÍ -->
     <div id="sobre-mi" class="tab-content">
       <div class="note-card">
         <h3><i class="fa-solid fa-book-open"></i> Biografía</h3>
-        <p>¡Hola! Bienvenido a mi espacio personal. Aquí guardo mis enlaces, pensamientos y cosas que me gustan.</p>
+        <p>¡Hola! Bienvenido a mi espacio personal. Aquí guardo mis enlaces, gustos y proyectos.</p>
       </div>
 
       <div class="note-card">
         <h3><i class="fa-solid fa-circle-info"></i> Datos Rápidos</h3>
         <p>• <strong>Estado:</strong> En modo inercia ⚡<br>
            • <strong>Música favorita:</strong> AJR</p>
-      </div>
-
-      <div class="sticky-note">
-        📌 "Inertia, I'll wear the same clothes for a week if I could..."
       </div>
     </div>
 
@@ -527,17 +467,29 @@
       <div class="note-card">
         <h3><i class="fa-solid fa-headphones"></i> Música</h3>
         <div class="tags-container">
-          <a href="https://www.youtube.com/@AJR" target="_blank" class="tag highlight"><i class="fa-brands fa-youtube"></i> AJR - Inertia</a>
-          <span class="tag">Indie Pop</span>
-          <span class="tag">Alternative</span>
+          <a href="https://www.youtube.com/@AJR" target="_blank" class="tag highlight"><i class="fa-brands fa-youtube"></i> AJR</a>
+          <span class="tag">Imagine Dragons</span>
+          <span class="tag">Rag'n'Bone Man</span>
+          <span class="tag">Mägo de Oz</span>
+          <span class="tag">Michael Jackson</span>
+          <span class="tag">Twenty One Pilots</span>
+          <span class="tag">Esperón</span>
         </div>
       </div>
 
       <div class="note-card">
         <h3><i class="fa-solid fa-gamepad"></i> Videojuegos</h3>
         <div class="tags-container">
-          <span class="tag highlight">🎮 Steam Games</span>
-          <span class="tag">🎮 PC</span>
+          <span class="tag highlight">🎮 Assassin's Creed Unity</span>
+          <span class="tag highlight">🎮 Assassin's Creed Black Flag</span>
+          <span class="tag">🎮 Celeste</span>
+          <span class="tag">🎮 Marvel Rivals</span>
+          <span class="tag">🎮 My Hero Ultra Rumble</span>
+          <span class="tag">🎮 Project Zomboid</span>
+          <span class="tag">🎮 Undertale</span>
+          <span class="tag">🎮 Zenless Zone Zero</span>
+          <span class="tag">🎮 Minecraft</span>
+          <span class="tag">🎮 Roblox</span>
         </div>
       </div>
     </div>
@@ -545,7 +497,7 @@
   </div>
 
   <script>
-    // Navegación entre pestañas
+    // Navegación de pestañas
     function switchTab(tabId, buttonElement) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
@@ -559,20 +511,36 @@
     const playIcon = document.getElementById('playIcon');
     const visualizer = document.getElementById('visualizer');
 
+    function startMusic() {
+      audio.play().then(() => {
+        playIcon.className = 'fa-solid fa-pause';
+        visualizer.classList.add('active');
+      }).catch(() => {
+        // Bloqueo de autoplay por políticas del navegador
+      });
+    }
+
     function toggleMusic() {
       if (audio.paused) {
-        audio.play().then(() => {
-          playIcon.className = 'fa-solid fa-pause';
-          visualizer.classList.add('active');
-        }).catch(err => {
-          console.log("Error al reproducir audio:", err);
-        });
+        startMusic();
       } else {
         audio.pause();
         playIcon.className = 'fa-solid fa-play';
         visualizer.classList.remove('active');
       }
     }
+
+    // Intentar reproducción automática al cargar
+    window.addEventListener('load', () => {
+      startMusic();
+    });
+
+    // Desbloqueo garantizado con el primer clic del usuario en la pantalla
+    document.addEventListener('click', () => {
+      if (audio.paused) {
+        startMusic();
+      }
+    }, { once: true });
   </script>
 </body>
 </html>
