@@ -263,7 +263,7 @@
       margin-top: 2px;
     }
 
-    /* Lista de Enlaces */
+    /* Enlaces */
     .links-group {
       display: flex;
       flex-direction: column;
@@ -315,7 +315,7 @@
 
     .note-card h3 {
       font-size: 1rem;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       color: var(--accent-blue);
       display: flex;
       align-items: center;
@@ -340,12 +340,12 @@
       padding: 6px 12px;
       border-radius: 20px;
       font-size: 0.85rem;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 6px;
       text-decoration: none;
-      color: #fff;
-      transition: 0.2s;
+      color: #f0f3f6;
+      transition: all 0.2s ease;
     }
 
     .tag.highlight {
@@ -354,7 +354,9 @@
     }
 
     .tag:hover {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-2px);
     }
   </style>
 </head>
@@ -420,7 +422,7 @@
 
       <div class="links-group">
         <!-- Discord -->
-        <a href="https://discordapp.com/users/1466405048996073647" target="_blank" class="link-item">
+        <a href="https://discordapp.com/users/1466405048996073647" target="_blank" rel="noopener noreferrer" class="link-item">
           <div class="link-left">
             <i class="fa-brands fa-discord" style="color: #5865F2;"></i>
             <span>Discord</span>
@@ -429,7 +431,7 @@
         </a>
 
         <!-- Música favorita (AJR) -->
-        <a href="https://www.youtube.com/@AJR" target="_blank" class="link-item">
+        <a href="https://www.youtube.com/@AJR" target="_blank" rel="noopener noreferrer" class="link-item">
           <div class="link-left">
             <i class="fa-brands fa-youtube" style="color: #FF0000;"></i>
             <span>Música Favorita (AJR)</span>
@@ -438,7 +440,7 @@
         </a>
 
         <!-- Steam -->
-        <a href="https://steamcommunity.com/profiles/76561199158894731/" target="_blank" class="link-item">
+        <a href="https://steamcommunity.com/profiles/76561199158894731/" target="_blank" rel="noopener noreferrer" class="link-item">
           <div class="link-left">
             <i class="fa-brands fa-steam" style="color: #66c0f4;"></i>
             <span>Perfil de Steam</span>
@@ -462,34 +464,68 @@
       </div>
     </div>
 
-    <!-- 3. PESTAÑA LIKES -->
+    <!-- 3. PESTAÑA LIKES (CON ENLACES DIRECTOS) -->
     <div id="likes" class="tab-content">
       <div class="note-card">
         <h3><i class="fa-solid fa-headphones"></i> Música</h3>
         <div class="tags-container">
-          <a href="https://www.youtube.com/@AJR" target="_blank" class="tag highlight"><i class="fa-brands fa-youtube"></i> AJR</a>
-          <span class="tag">Imagine Dragons</span>
-          <span class="tag">Rag'n'Bone Man</span>
-          <span class="tag">Mägo de Oz</span>
-          <span class="tag">Michael Jackson</span>
-          <span class="tag">Twenty One Pilots</span>
-          <span class="tag">Esperón</span>
+          <a href="https://www.youtube.com/@AJR" target="_blank" rel="noopener noreferrer" class="tag highlight">
+            <i class="fa-brands fa-youtube"></i> AJR
+          </a>
+          <a href="https://www.youtube.com/@ImagineDragons" target="_blank" rel="noopener noreferrer" class="tag">
+            Imagine Dragons
+          </a>
+          <a href="https://www.youtube.com/@ragnbonemanmusic" target="_blank" rel="noopener noreferrer" class="tag">
+            Rag'n'Bone Man
+          </a>
+          <a href="https://www.youtube.com/@magodeozoficial" target="_blank" rel="noopener noreferrer" class="tag">
+            Mägo de Oz
+          </a>
+          <a href="https://www.youtube.com/@MichaelJackson" target="_blank" rel="noopener noreferrer" class="tag">
+            Michael Jackson
+          </a>
+          <a href="https://www.youtube.com/@twentyonepilots" target="_blank" rel="noopener noreferrer" class="tag">
+            Twenty One Pilots
+          </a>
+          <a href="https://www.youtube.com/results?search_query=Esper%C3%B3n+musica" target="_blank" rel="noopener noreferrer" class="tag">
+            Esperón
+          </a>
         </div>
       </div>
 
       <div class="note-card">
         <h3><i class="fa-solid fa-gamepad"></i> Videojuegos</h3>
         <div class="tags-container">
-          <span class="tag highlight">🎮 Assassin's Creed Unity</span>
-          <span class="tag highlight">🎮 Assassin's Creed Black Flag</span>
-          <span class="tag">🎮 Celeste</span>
-          <span class="tag">🎮 Marvel Rivals</span>
-          <span class="tag">🎮 My Hero Ultra Rumble</span>
-          <span class="tag">🎮 Project Zomboid</span>
-          <span class="tag">🎮 Undertale</span>
-          <span class="tag">🎮 Zenless Zone Zero</span>
-          <span class="tag">🎮 Minecraft</span>
-          <span class="tag">🎮 Roblox</span>
+          <a href="https://store.steampowered.com/app/289650/Assassins_Creed_Unity/" target="_blank" rel="noopener noreferrer" class="tag highlight">
+            <i class="fa-solid fa-gamepad"></i> Assassin's Creed Unity
+          </a>
+          <a href="https://store.steampowered.com/app/242050/Assassins_Creed_IV_Black_Flag/" target="_blank" rel="noopener noreferrer" class="tag highlight">
+            <i class="fa-solid fa-gamepad"></i> Assassin's Creed Black Flag
+          </a>
+          <a href="https://store.steampowered.com/app/504230/Celeste/" target="_blank" rel="noopener noreferrer" class="tag">
+            <i class="fa-solid fa-gamepad"></i> Celeste
+          </a>
+          <a href="https://store.steampowered.com/app/2767030/Marvel_Rivals/" target="_blank" rel="noopener noreferrer" class="tag">
+            <i class="fa-solid fa-gamepad"></i> Marvel Rivals
+          </a>
+          <a href="https://store.steampowered.com/app/1607250/MY_HERO_ULTRA_RUMBLE/" target="_blank" rel="noopener noreferrer" class="tag">
+            <i class="fa-solid fa-gamepad"></i> My Hero Ultra Rumble
+          </a>
+          <a href="https://store.steampowered.com/app/108600/Project_Zomboid/" target="_blank" rel="noopener noreferrer" class="tag">
+            <i class="fa-solid fa-gamepad"></i> Project Zomboid
+          </a>
+          <a href="https://store.steampowered.com/app/391540/Undertale/" target="_blank" rel="noopener noreferrer" class="tag">
+            <i class="fa-solid fa-gamepad"></i> Undertale
+          </a>
+          <a href="https://zenless.hoyoverse.com/" target="_blank" rel="noopener noreferrer" class="tag">
+            <i class="fa-solid fa-gamepad"></i> Zenless Zone Zero
+          </a>
+          <a href="https://www.minecraft.net/" target="_blank" rel="noopener noreferrer" class="tag">
+            <i class="fa-solid fa-gamepad"></i> Minecraft
+          </a>
+          <a href="https://www.roblox.com/" target="_blank" rel="noopener noreferrer" class="tag">
+            <i class="fa-solid fa-gamepad"></i> Roblox
+          </a>
         </div>
       </div>
     </div>
@@ -516,7 +552,7 @@
         playIcon.className = 'fa-solid fa-pause';
         visualizer.classList.add('active');
       }).catch(() => {
-        // Bloqueo de autoplay por políticas del navegador
+        // Bloqueo de autoplay controlado por políticas del navegador
       });
     }
 
@@ -530,12 +566,12 @@
       }
     }
 
-    // Intentar reproducción automática al cargar
+    // Autoplay al cargar la página
     window.addEventListener('load', () => {
       startMusic();
     });
 
-    // Desbloqueo garantizado con el primer clic del usuario en la pantalla
+    // Desbloqueo garantizado al primer clic en cualquier zona de la web
     document.addEventListener('click', () => {
       if (audio.paused) {
         startMusic();
