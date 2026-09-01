@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inertia-afk 📓</title>
 
-  <!-- Fuentes de Google: Outfit (moderna) y Caveat (manuscrita) -->
+  <!-- Fuentes de Google: Outfit y Caveat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -42,7 +42,6 @@
       font-family: var(--font-body);
       color: var(--text-main);
       background-color: var(--bg-dark);
-      /* Patrón de cuadrícula de libreta */
       background-image: 
         linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
@@ -105,7 +104,7 @@
       background: #e5535e;
     }
 
-    /* Visualizador de ondas de sonido */
+    /* Visualizador de audio */
     .visualizer {
       display: flex;
       align-items: flex-end;
@@ -131,10 +130,10 @@
       50% { height: 16px; }
     }
 
-    /* Cuaderno central */
+    /* Libreta principal */
     .notebook {
       width: 100%;
-      max-width: 500px;
+      max-width: 480px;
       background: var(--paper-bg);
       backdrop-filter: blur(16px);
       border: 1px solid var(--paper-border);
@@ -145,7 +144,6 @@
       margin-top: 30px;
     }
 
-    /* Espiral de cuaderno decorativa en la parte superior */
     .notebook-spiral {
       position: absolute;
       top: -14px;
@@ -164,31 +162,30 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.5);
     }
 
-    /* Pestañas de navegación (Marcadores de libro) */
+    /* Pestañas */
     .nav-tabs {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       margin-bottom: 24px;
       border-bottom: 1px dashed var(--paper-border);
       padding-bottom: 12px;
-      overflow-x: auto;
-      scrollbar-width: none;
     }
 
     .nav-tab {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--paper-border);
       color: var(--text-muted);
-      padding: 8px 14px;
+      padding: 8px 16px;
       border-radius: 8px;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 500;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
       transition: all 0.2s ease;
-      white-space: nowrap;
+      flex: 1;
+      justify-content: center;
     }
 
     .nav-tab:hover {
@@ -203,7 +200,6 @@
       box-shadow: 0 4px 12px rgba(224, 108, 117, 0.3);
     }
 
-    /* Contenido de las pestañas */
     .tab-content {
       display: none;
       animation: fadeIn 0.3s ease;
@@ -218,7 +214,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* =================== SECCIÓN INICIO =================== */
+    /* Header de perfil */
     .profile-header {
       display: flex;
       flex-direction: column;
@@ -261,9 +257,9 @@
 
     .handwritten-badge {
       font-family: var(--font-hand);
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       color: var(--accent-yellow);
-      transform: rotate(-3deg);
+      transform: rotate(-2deg);
     }
 
     .bio-quote {
@@ -273,7 +269,7 @@
       font-style: italic;
     }
 
-    /* Botones de enlaces */
+    /* Lista de Enlaces */
     .links-group {
       display: flex;
       flex-direction: column;
@@ -285,7 +281,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 18px;
+      padding: 13px 18px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--paper-border);
       border-radius: 12px;
@@ -314,7 +310,7 @@
       text-align: center;
     }
 
-    /* Redes sociales */
+    /* Redes sociales inferiores */
     .social-row {
       display: flex;
       justify-content: center;
@@ -341,7 +337,7 @@
       transform: translateY(-3px);
     }
 
-    /* =================== SECCIÓN SOBRE MÍ =================== */
+    /* Tarjetas de notas */
     .note-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px dashed var(--paper-border);
@@ -378,7 +374,6 @@
       margin-top: 16px;
     }
 
-    /* =================== SECCIÓN LIKES =================== */
     .tags-container {
       display: flex;
       flex-wrap: wrap;
@@ -395,6 +390,9 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      text-decoration: none;
+      color: #fff;
+      transition: 0.2s;
     }
 
     .tag.highlight {
@@ -402,68 +400,14 @@
       color: var(--accent-green);
     }
 
-    /* =================== SECCIÓN PIN SECRETO =================== */
-    .pin-box {
-      text-align: center;
-      padding: 20px 10px;
-    }
-
-    .pin-lock-icon {
-      font-size: 2.5rem;
-      color: var(--accent-yellow);
-      margin-bottom: 12px;
-    }
-
-    .pin-display {
-      letter-spacing: 8px;
-      font-size: 1.6rem;
-      font-family: monospace;
-      padding: 10px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--paper-border);
-      border-radius: 8px;
-      width: 140px;
-      margin: 12px auto;
-      min-height: 48px;
-    }
-
-    .pin-keypad {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      max-width: 220px;
-      margin: 0 auto;
-    }
-
-    .key-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--paper-border);
-      color: #fff;
-      padding: 12px 0;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-
-    .key-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .key-btn:active {
-      transform: scale(0.95);
-    }
-
-    .secret-unlocked {
-      display: none;
-      animation: fadeIn 0.4s ease;
+    .tag:hover {
+      background: rgba(255, 255, 255, 0.12);
     }
   </style>
 </head>
 <body>
 
-  <!-- REPRODUCTOR DE MÚSICA -->
+  <!-- REPRODUCTOR FLOTANTE: Inertia - AJR -->
   <div class="music-bar">
     <div class="visualizer" id="visualizer">
       <span></span>
@@ -480,10 +424,9 @@
     </button>
   </div>
 
-  <!-- Audio Element (Coloca aquí el archivo inertia.mp3 o tu enlace directo) -->
-  <audio id="bgAudio" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
+  <!-- Audio vinculado a tu archivo subido -->
+  <audio id="bgAudio" loop src="ajrinertia.mp3"></audio>
 
-  <!-- LIBRETA PRINCIPAL -->
   <div class="notebook">
     <!-- Espirales decorativas -->
     <div class="notebook-spiral">
@@ -507,27 +450,25 @@
       <button class="nav-tab" onclick="switchTab('likes', this)">
         <i class="fa-solid fa-heart"></i> Likes
       </button>
-      <button class="nav-tab" onclick="switchTab('secreto', this)">
-        <i class="fa-solid fa-lock"></i> Diario Secreto
-      </button>
     </div>
 
     <!-- 1. PESTAÑA INICIO -->
     <div id="inicio" class="tab-content active">
       <div class="profile-header">
         <div class="avatar-wrapper">
-          <img src="https://via.placeholder.com/150" alt="Avatar" class="avatar">
+          <img src="avatar.jpg" alt="Avatar" class="avatar">
           <div class="status-dot"></div>
         </div>
         <h1 class="username">
           Inertia-afk <i class="fa-solid fa-circle-check" style="color:#61afef; font-size:1rem;"></i>
         </h1>
-        <span class="handwritten-badge">página de notas v1.0 ✏️</span>
+        <span class="handwritten-badge">página de notas ✏️</span>
         <p class="bio-quote">"Where do I belong? I'm an object in motion..."</p>
       </div>
 
       <div class="links-group">
-        <a href="https://discord.com" target="_blank" class="link-item">
+        <!-- Discord -->
+        <a href="https://discordapp.com/users/1466405048996073647" target="_blank" class="link-item">
           <div class="link-left">
             <i class="fa-brands fa-discord" style="color: #5865F2;"></i>
             <span>Discord</span>
@@ -535,36 +476,31 @@
           <i class="fa-solid fa-arrow-right"></i>
         </a>
 
-        <a href="https://spotify.com" target="_blank" class="link-item">
+        <!-- Música favorita (Canal oficial de AJR) -->
+        <a href="https://www.youtube.com/@AJR" target="_blank" class="link-item">
           <div class="link-left">
-            <i class="fa-brands fa-spotify" style="color: #1DB954;"></i>
-            <span>Mi Playlist de Spotify</span>
+            <i class="fa-brands fa-youtube" style="color: #FF0000;"></i>
+            <span>Música Favorita (AJR)</span>
           </div>
           <i class="fa-solid fa-arrow-right"></i>
         </a>
 
-        <a href="https://store.steampowered.com" target="_blank" class="link-item">
+        <!-- Steam -->
+        <a href="https://steamcommunity.com/profiles/76561199158894731/" target="_blank" class="link-item">
           <div class="link-left">
             <i class="fa-brands fa-steam" style="color: #66c0f4;"></i>
             <span>Perfil de Steam</span>
           </div>
           <i class="fa-solid fa-arrow-right"></i>
         </a>
-
-        <button onclick="copiarCorreo('contacto@correo.com')" class="link-item" style="cursor:pointer; text-align:left; width:100%;">
-          <div class="link-left">
-            <i class="fa-solid fa-envelope" style="color: var(--accent-yellow);"></i>
-            <span id="correoTexto">Copiar mi Correo</span>
-          </div>
-          <i class="fa-regular fa-copy"></i>
-        </button>
       </div>
 
+      <!-- Iconos inferiores preparados para tus futuras redes -->
       <div class="social-row">
-        <a href="https://instagram.com" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://x.com" target="_blank" class="social-btn"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="https://tiktok.com" target="_blank" class="social-btn"><i class="fa-brands fa-tiktok"></i></a>
-        <a href="https://twitch.tv" target="_blank" class="social-btn"><i class="fa-brands fa-twitch"></i></a>
+        <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="social-btn"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="social-btn"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="#" class="social-btn"><i class="fa-brands fa-twitch"></i></a>
       </div>
     </div>
 
@@ -572,93 +508,36 @@
     <div id="sobre-mi" class="tab-content">
       <div class="note-card">
         <h3><i class="fa-solid fa-book-open"></i> Biografía</h3>
-        <p>¡Hola! Bienvenido a mi espacio personal. Aquí guardo mis enlaces, pensamientos y cosas que me gustan. Soy una persona apasionada por la música, la creatividad y los videojuegos.</p>
+        <p>¡Hola! Bienvenido a mi espacio personal. Aquí guardo mis enlaces, pensamientos y cosas que me gustan.</p>
       </div>
 
       <div class="note-card">
         <h3><i class="fa-solid fa-circle-info"></i> Datos Rápidos</h3>
-        <p>• <strong>Ubicación:</strong> Planeta Tierra 🌎<br>
-           • <strong>Estado:</strong> En modo inercia ⚡<br>
-           • <strong>Música favorita:</strong> AJR, Indie, Alt-Rock</p>
+        <p>• <strong>Estado:</strong> En modo inercia ⚡<br>
+           • <strong>Música favorita:</strong> AJR</p>
       </div>
 
       <div class="sticky-note">
-        📌 Nota mental: No olvidar tomar agua y actualizar la playlist cada viernes!
+        📌 "Inertia, I'll wear the same clothes for a week if I could..."
       </div>
     </div>
 
     <!-- 3. PESTAÑA LIKES -->
     <div id="likes" class="tab-content">
       <div class="note-card">
-        <h3><i class="fa-solid fa-headphones"></i> Artistas y Canciones</h3>
+        <h3><i class="fa-solid fa-headphones"></i> Música</h3>
         <div class="tags-container">
-          <span class="tag highlight"><i class="fa-solid fa-music"></i> AJR - Inertia</span>
-          <span class="tag"><i class="fa-solid fa-music"></i> Glass Animals</span>
-          <span class="tag"><i class="fa-solid fa-music"></i> Cavetown</span>
-          <span class="tag"><i class="fa-solid fa-music"></i> BoyWithUke</span>
+          <a href="https://www.youtube.com/@AJR" target="_blank" class="tag highlight"><i class="fa-brands fa-youtube"></i> AJR - Inertia</a>
+          <span class="tag">Indie Pop</span>
+          <span class="tag">Alternative</span>
         </div>
       </div>
 
       <div class="note-card">
         <h3><i class="fa-solid fa-gamepad"></i> Videojuegos</h3>
         <div class="tags-container">
-          <span class="tag highlight">🎮 Minecraft</span>
-          <span class="tag">🎮 Hollow Knight</span>
-          <span class="tag">🎮 Valorant</span>
-          <span class="tag">🎮 Celeste</span>
-        </div>
-      </div>
-
-      <div class="note-card">
-        <h3><i class="fa-solid fa-thumbs-down"></i> Dislikes</h3>
-        <div class="tags-container">
-          <span class="tag">❌ El calor extremo</span>
-          <span class="tag">❌ Las alarmas temprano</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. PESTAÑA SECRETA (CON PIN) -->
-    <div id="secreto" class="tab-content">
-      <!-- Pantalla de bloqueo -->
-      <div id="pinLockScreen" class="pin-box">
-        <i class="fa-solid fa-lock pin-lock-icon"></i>
-        <h3>Página Protegida</h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Introduce el PIN para desbloquear este apunte privado.</p>
-        <div class="pin-display" id="pinDisplay">----</div>
-
-        <div class="pin-keypad">
-          <button class="key-btn" onclick="pressKey('1')">1</button>
-          <button class="key-btn" onclick="pressKey('2')">2</button>
-          <button class="key-btn" onclick="pressKey('3')">3</button>
-          <button class="key-btn" onclick="pressKey('4')">4</button>
-          <button class="key-btn" onclick="pressKey('5')">5</button>
-          <button class="key-btn" onclick="pressKey('6')">6</button>
-          <button class="key-btn" onclick="pressKey('7')">7</button>
-          <button class="key-btn" onclick="pressKey('8')">8</button>
-          <button class="key-btn" onclick="pressKey('9')">9</button>
-          <button class="key-btn" style="color: var(--accent);" onclick="clearPin()">C</button>
-          <button class="key-btn" onclick="pressKey('0')">0</button>
-          <button class="key-btn" style="color: var(--accent-green);" onclick="checkPin()"><i class="fa-solid fa-check"></i></button>
-        </div>
-        <p id="pinError" style="color: var(--accent); font-size: 0.8rem; margin-top: 10px; display: none;">PIN incorrecto. Inténtalo de nuevo.</p>
-      </div>
-
-      <!-- Contenido Oculto que se desbloquea con el PIN -->
-      <div id="secretUnlockedScreen" class="secret-unlocked">
-        <div class="note-card" style="border-color: var(--accent-yellow);">
-          <h3><i class="fa-solid fa-key" style="color: var(--accent-yellow);"></i> Diario Desbloqueado</h3>
-          <p>¡Has ingresado el PIN correcto! Aquí puedes colocar contenido privado, fotos secretas, enlaces a proyectos personales o notas íntimas.</p>
-        </div>
-
-        <div class="sticky-note" style="background: #fca5a5; transform: rotate(-1deg);">
-          🔒 Esta es una nota súper secreta que solo tú o las personas con el código pueden leer.
-        </div>
-
-        <div style="text-align: center; margin-top: 20px;">
-          <button onclick="lockAgain()" class="key-btn" style="padding: 8px 18px; font-size: 0.85rem; width: auto;">
-            <i class="fa-solid fa-lock"></i> Volver a bloquear
-          </button>
+          <span class="tag highlight">🎮 Steam Games</span>
+          <span class="tag">🎮 PC</span>
         </div>
       </div>
     </div>
@@ -666,7 +545,7 @@
   </div>
 
   <script>
-    // 1. NAVEGACIÓN POR PESTAÑAS
+    // Navegación entre pestañas
     function switchTab(tabId, buttonElement) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
@@ -675,7 +554,7 @@
       buttonElement.classList.add('active');
     }
 
-    // 2. REPRODUCTOR DE MÚSICA Y VISUALIZADOR
+    // Control de música y visualizador
     const audio = document.getElementById('bgAudio');
     const playIcon = document.getElementById('playIcon');
     const visualizer = document.getElementById('visualizer');
@@ -693,65 +572,6 @@
         playIcon.className = 'fa-solid fa-play';
         visualizer.classList.remove('active');
       }
-    }
-
-    // 3. COPIAR CORREO AL PORTAPAPELES
-    function copiarCorreo(correo) {
-      navigator.clipboard.writeText(correo);
-      const texto = document.getElementById('correoTexto');
-      texto.innerText = "¡Copiado!";
-      setTimeout(() => {
-        texto.innerText = "Copiar mi Correo";
-      }, 2000);
-    }
-
-    // 4. LÓGICA DEL PIN SECRETO
-    const CORRECT_PIN = "1234"; // <-- Cambia tu PIN aquí
-    let currentInput = "";
-
-    function pressKey(num) {
-      if (currentInput.length < 4) {
-        currentInput += num;
-        updatePinDisplay();
-      }
-      if (currentInput.length === 4) {
-        checkPin();
-      }
-    }
-
-    function clearPin() {
-      currentInput = "";
-      updatePinDisplay();
-      document.getElementById('pinError').style.display = 'none';
-    }
-
-    function updatePinDisplay() {
-      const display = document.getElementById('pinDisplay');
-      let text = "";
-      for (let i = 0; i < 4; i++) {
-        text += currentInput[i] ? "●" : "-";
-      }
-      display.innerText = text;
-    }
-
-    function checkPin() {
-      const errorMsg = document.getElementById('pinError');
-      if (currentInput === CORRECT_PIN) {
-        document.getElementById('pinLockScreen').style.display = 'none';
-        document.getElementById('secretUnlockedScreen').style.display = 'block';
-        errorMsg.style.display = 'none';
-      } else {
-        errorMsg.style.display = 'block';
-        currentInput = "";
-        updatePinDisplay();
-      }
-    }
-
-    function lockAgain() {
-      currentInput = "";
-      updatePinDisplay();
-      document.getElementById('secretUnlockedScreen').style.display = 'none';
-      document.getElementById('pinLockScreen').style.display = 'block';
     }
   </script>
 </body>
