@@ -3,16 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inertia-afk</title>
+  <title>Inertia-afk 📓</title>
+
+  <!-- Fuentes de Google: Outfit (moderna) y Caveat (manuscrita) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
   <!-- Iconos de FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
+
   <style>
+    :root {
+      --bg-dark: #0e1117;
+      --paper-bg: rgba(22, 27, 39, 0.85);
+      --paper-border: rgba(255, 255, 255, 0.12);
+      --accent: #e06c75;
+      --accent-blue: #61afef;
+      --accent-yellow: #e5c07b;
+      --accent-green: #98c379;
+      --text-main: #f0f3f6;
+      --text-muted: #8b949e;
+      --font-hand: 'Caveat', cursive;
+      --font-body: 'Outfit', sans-serif;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
@@ -20,81 +39,267 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      /* Imagen de fondo genérica, puedes cambiar este link por tu propia imagen */
-      background: #0d0f17 url('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1920') no-repeat center center/cover;
-      color: #ffffff;
-      padding: 24px 16px;
+      font-family: var(--font-body);
+      color: var(--text-main);
+      background-color: var(--bg-dark);
+      /* Patrón de cuadrícula de libreta */
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+      padding: 40px 16px;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    .container {
+    /* Reproductor flotante superior */
+    .music-bar {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(18, 22, 34, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 8px 16px;
+      border-radius: 30px;
+      border: 1px solid var(--paper-border);
+      z-index: 100;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .music-info {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .music-title {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .music-artist {
+      color: var(--text-muted);
+    }
+
+    .play-btn {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.1);
+      background: #e5535e;
+    }
+
+    /* Visualizador de ondas de sonido */
+    .visualizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 16px;
+    }
+
+    .visualizer span {
+      width: 3px;
+      background-color: var(--accent);
+      border-radius: 2px;
+      height: 4px;
+      transition: height 0.2s ease;
+    }
+
+    .visualizer.active span:nth-child(1) { animation: bounce 0.8s infinite ease-in-out; }
+    .visualizer.active span:nth-child(2) { animation: bounce 0.6s infinite 0.1s ease-in-out; }
+    .visualizer.active span:nth-child(3) { animation: bounce 0.9s infinite 0.2s ease-in-out; }
+    .visualizer.active span:nth-child(4) { animation: bounce 0.7s infinite 0.3s ease-in-out; }
+
+    @keyframes bounce {
+      0%, 100% { height: 4px; }
+      50% { height: 16px; }
+    }
+
+    /* Cuaderno central */
+    .notebook {
       width: 100%;
-      max-width: 440px;
+      max-width: 500px;
+      background: var(--paper-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--paper-border);
+      border-radius: 20px;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      padding: 32px 24px;
+      margin-top: 30px;
+    }
+
+    /* Espiral de cuaderno decorativa en la parte superior */
+    .notebook-spiral {
+      position: absolute;
+      top: -14px;
+      left: 30px;
+      right: 30px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .ring {
+      width: 12px;
+      height: 24px;
+      background: linear-gradient(to right, #444, #bbb, #333);
+      border-radius: 6px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+    }
+
+    /* Pestañas de navegación (Marcadores de libro) */
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 24px;
+      border-bottom: 1px dashed var(--paper-border);
+      padding-bottom: 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-tab {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--paper-border);
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .nav-tab.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(224, 108, 117, 0.3);
+    }
+
+    /* Contenido de las pestañas */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =================== SECCIÓN INICIO =================== */
+    .profile-header {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+      margin-bottom: 20px;
     }
 
-    /* Foto de perfil */
+    .avatar-wrapper {
+      position: relative;
+      margin-bottom: 12px;
+    }
+
     .avatar {
-      width: 96px;
-      height: 96px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid rgba(255, 255, 255, 0.2);
-      margin-bottom: 14px;
+    }
+
+    .status-dot {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      width: 16px;
+      height: 16px;
+      background: #4ade80;
+      border: 3px solid #161b27;
+      border-radius: 50%;
     }
 
     .username {
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 6px;
-      margin-bottom: 4px;
+      gap: 8px;
     }
 
-    .badge {
-      color: #38bdf8;
-      font-size: 0.95rem;
+    .handwritten-badge {
+      font-family: var(--font-hand);
+      font-size: 1.2rem;
+      color: var(--accent-yellow);
+      transform: rotate(-3deg);
     }
 
-    .subtitle {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.65);
-      margin-bottom: 24px;
+    .bio-quote {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-style: italic;
     }
 
     /* Botones de enlaces */
-    .links-list {
-      width: 100%;
+    .links-group {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-bottom: 28px;
+      gap: 10px;
+      margin-top: 16px;
     }
 
-    .link-card {
+    .link-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 20px;
+      padding: 12px 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--paper-border);
       border-radius: 12px;
-      background: rgba(18, 22, 34, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      color: #ffffff;
+      color: #fff;
       text-decoration: none;
       font-size: 0.95rem;
       font-weight: 500;
-      transition: all 0.2s ease;
+      transition: all 0.2s;
     }
 
-    .link-card:hover {
-      background: rgba(35, 43, 66, 0.85);
+    .link-item:hover {
+      background: rgba(255, 255, 255, 0.08);
       border-color: rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px);
+      transform: translateX(4px);
     }
 
     .link-left {
@@ -104,91 +309,450 @@
     }
 
     .link-left i {
-      font-size: 1.15rem;
-      width: 20px;
+      font-size: 1.2rem;
+      width: 22px;
       text-align: center;
     }
 
-    /* Iconos inferiores */
-    .social-icons {
+    /* Redes sociales */
+    .social-row {
       display: flex;
-      gap: 16px;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 24px;
     }
 
-    .social-icons a {
-      width: 42px;
-      height: 42px;
+    .social-btn {
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: rgba(18, 22, 34, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--paper-border);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #ffffff;
+      color: #fff;
       text-decoration: none;
-      transition: background 0.2s, transform 0.2s;
+      transition: 0.2s;
     }
 
-    .social-icons a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.1);
+    .social-btn:hover {
+      background: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    /* =================== SECCIÓN SOBRE MÍ =================== */
+    .note-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed var(--paper-border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .note-card h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: var(--accent-blue);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .note-card p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #d1d5db;
+    }
+
+    .sticky-note {
+      background: #fef08a;
+      color: #1e293b;
+      padding: 12px 16px;
+      border-radius: 4px;
+      font-family: var(--font-hand);
+      font-size: 1.3rem;
+      line-height: 1.3;
+      transform: rotate(1deg);
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.3);
+      margin-top: 16px;
+    }
+
+    /* =================== SECCIÓN LIKES =================== */
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--paper-border);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tag.highlight {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+
+    /* =================== SECCIÓN PIN SECRETO =================== */
+    .pin-box {
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    .pin-lock-icon {
+      font-size: 2.5rem;
+      color: var(--accent-yellow);
+      margin-bottom: 12px;
+    }
+
+    .pin-display {
+      letter-spacing: 8px;
+      font-size: 1.6rem;
+      font-family: monospace;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--paper-border);
+      border-radius: 8px;
+      width: 140px;
+      margin: 12px auto;
+      min-height: 48px;
+    }
+
+    .pin-keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 220px;
+      margin: 0 auto;
+    }
+
+    .key-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--paper-border);
+      color: #fff;
+      padding: 12px 0;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .key-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .key-btn:active {
+      transform: scale(0.95);
+    }
+
+    .secret-unlocked {
+      display: none;
+      animation: fadeIn 0.4s ease;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- Foto de perfil: reemplaza el link con tu imagen -->
-    <img src="https://via.placeholder.com/150" alt="Avatar" class="avatar">
-
-    <h1 class="username">
-      Inertia-afk <i class="fa-solid fa-circle-check badge"></i>
-    </h1>
-    <p class="subtitle">Tiendas y Conexiones</p>
-
-    <!-- Lista de botones (cambia los href="#" por tus enlaces) -->
-    <div class="links-list">
-      <a href="https://discord.com" target="_blank" class="link-card">
-        <div class="link-left">
-          <i class="fa-brands fa-discord"></i>
-          <span>Añádeme en Discord</span>
-        </div>
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
-
-      <a href="https://paypal.me" target="_blank" class="link-card">
-        <div class="link-left">
-          <i class="fa-brands fa-paypal"></i>
-          <span>Apoyar en PayPal</span>
-        </div>
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
-
-      <a href="https://ko-fi.com" target="_blank" class="link-card">
-        <div class="link-left">
-          <i class="fa-solid fa-mug-hot"></i>
-          <span>Invítame un Ko-fi</span>
-        </div>
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
-
-      <a href="https://patreon.com" target="_blank" class="link-card">
-        <div class="link-left">
-          <i class="fa-brands fa-patreon"></i>
-          <span>Tienda de Patreon</span>
-        </div>
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
+  <!-- REPRODUCTOR DE MÚSICA -->
+  <div class="music-bar">
+    <div class="visualizer" id="visualizer">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-
-    <!-- Iconos inferiores -->
-    <div class="social-icons">
-      <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-      <a href="https://tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+    <div class="music-info">
+      <span class="music-title">Inertia</span>
+      <span class="music-artist">AJR</span>
     </div>
+    <button class="play-btn" id="playBtn" onclick="toggleMusic()">
+      <i class="fa-solid fa-play" id="playIcon"></i>
+    </button>
   </div>
 
+  <!-- Audio Element (Coloca aquí el archivo inertia.mp3 o tu enlace directo) -->
+  <audio id="bgAudio" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
+
+  <!-- LIBRETA PRINCIPAL -->
+  <div class="notebook">
+    <!-- Espirales decorativas -->
+    <div class="notebook-spiral">
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+    </div>
+
+    <!-- Menú de pestañas -->
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab('inicio', this)">
+        <i class="fa-solid fa-house"></i> Inicio
+      </button>
+      <button class="nav-tab" onclick="switchTab('sobre-mi', this)">
+        <i class="fa-solid fa-user"></i> Sobre mí
+      </button>
+      <button class="nav-tab" onclick="switchTab('likes', this)">
+        <i class="fa-solid fa-heart"></i> Likes
+      </button>
+      <button class="nav-tab" onclick="switchTab('secreto', this)">
+        <i class="fa-solid fa-lock"></i> Diario Secreto
+      </button>
+    </div>
+
+    <!-- 1. PESTAÑA INICIO -->
+    <div id="inicio" class="tab-content active">
+      <div class="profile-header">
+        <div class="avatar-wrapper">
+          <img src="https://via.placeholder.com/150" alt="Avatar" class="avatar">
+          <div class="status-dot"></div>
+        </div>
+        <h1 class="username">
+          Inertia-afk <i class="fa-solid fa-circle-check" style="color:#61afef; font-size:1rem;"></i>
+        </h1>
+        <span class="handwritten-badge">página de notas v1.0 ✏️</span>
+        <p class="bio-quote">"Where do I belong? I'm an object in motion..."</p>
+      </div>
+
+      <div class="links-group">
+        <a href="https://discord.com" target="_blank" class="link-item">
+          <div class="link-left">
+            <i class="fa-brands fa-discord" style="color: #5865F2;"></i>
+            <span>Discord</span>
+          </div>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+        <a href="https://spotify.com" target="_blank" class="link-item">
+          <div class="link-left">
+            <i class="fa-brands fa-spotify" style="color: #1DB954;"></i>
+            <span>Mi Playlist de Spotify</span>
+          </div>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+        <a href="https://store.steampowered.com" target="_blank" class="link-item">
+          <div class="link-left">
+            <i class="fa-brands fa-steam" style="color: #66c0f4;"></i>
+            <span>Perfil de Steam</span>
+          </div>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+        <button onclick="copiarCorreo('contacto@correo.com')" class="link-item" style="cursor:pointer; text-align:left; width:100%;">
+          <div class="link-left">
+            <i class="fa-solid fa-envelope" style="color: var(--accent-yellow);"></i>
+            <span id="correoTexto">Copiar mi Correo</span>
+          </div>
+          <i class="fa-regular fa-copy"></i>
+        </button>
+      </div>
+
+      <div class="social-row">
+        <a href="https://instagram.com" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://x.com" target="_blank" class="social-btn"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://tiktok.com" target="_blank" class="social-btn"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://twitch.tv" target="_blank" class="social-btn"><i class="fa-brands fa-twitch"></i></a>
+      </div>
+    </div>
+
+    <!-- 2. PESTAÑA SOBRE MÍ -->
+    <div id="sobre-mi" class="tab-content">
+      <div class="note-card">
+        <h3><i class="fa-solid fa-book-open"></i> Biografía</h3>
+        <p>¡Hola! Bienvenido a mi espacio personal. Aquí guardo mis enlaces, pensamientos y cosas que me gustan. Soy una persona apasionada por la música, la creatividad y los videojuegos.</p>
+      </div>
+
+      <div class="note-card">
+        <h3><i class="fa-solid fa-circle-info"></i> Datos Rápidos</h3>
+        <p>• <strong>Ubicación:</strong> Planeta Tierra 🌎<br>
+           • <strong>Estado:</strong> En modo inercia ⚡<br>
+           • <strong>Música favorita:</strong> AJR, Indie, Alt-Rock</p>
+      </div>
+
+      <div class="sticky-note">
+        📌 Nota mental: No olvidar tomar agua y actualizar la playlist cada viernes!
+      </div>
+    </div>
+
+    <!-- 3. PESTAÑA LIKES -->
+    <div id="likes" class="tab-content">
+      <div class="note-card">
+        <h3><i class="fa-solid fa-headphones"></i> Artistas y Canciones</h3>
+        <div class="tags-container">
+          <span class="tag highlight"><i class="fa-solid fa-music"></i> AJR - Inertia</span>
+          <span class="tag"><i class="fa-solid fa-music"></i> Glass Animals</span>
+          <span class="tag"><i class="fa-solid fa-music"></i> Cavetown</span>
+          <span class="tag"><i class="fa-solid fa-music"></i> BoyWithUke</span>
+        </div>
+      </div>
+
+      <div class="note-card">
+        <h3><i class="fa-solid fa-gamepad"></i> Videojuegos</h3>
+        <div class="tags-container">
+          <span class="tag highlight">🎮 Minecraft</span>
+          <span class="tag">🎮 Hollow Knight</span>
+          <span class="tag">🎮 Valorant</span>
+          <span class="tag">🎮 Celeste</span>
+        </div>
+      </div>
+
+      <div class="note-card">
+        <h3><i class="fa-solid fa-thumbs-down"></i> Dislikes</h3>
+        <div class="tags-container">
+          <span class="tag">❌ El calor extremo</span>
+          <span class="tag">❌ Las alarmas temprano</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. PESTAÑA SECRETA (CON PIN) -->
+    <div id="secreto" class="tab-content">
+      <!-- Pantalla de bloqueo -->
+      <div id="pinLockScreen" class="pin-box">
+        <i class="fa-solid fa-lock pin-lock-icon"></i>
+        <h3>Página Protegida</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Introduce el PIN para desbloquear este apunte privado.</p>
+        <div class="pin-display" id="pinDisplay">----</div>
+
+        <div class="pin-keypad">
+          <button class="key-btn" onclick="pressKey('1')">1</button>
+          <button class="key-btn" onclick="pressKey('2')">2</button>
+          <button class="key-btn" onclick="pressKey('3')">3</button>
+          <button class="key-btn" onclick="pressKey('4')">4</button>
+          <button class="key-btn" onclick="pressKey('5')">5</button>
+          <button class="key-btn" onclick="pressKey('6')">6</button>
+          <button class="key-btn" onclick="pressKey('7')">7</button>
+          <button class="key-btn" onclick="pressKey('8')">8</button>
+          <button class="key-btn" onclick="pressKey('9')">9</button>
+          <button class="key-btn" style="color: var(--accent);" onclick="clearPin()">C</button>
+          <button class="key-btn" onclick="pressKey('0')">0</button>
+          <button class="key-btn" style="color: var(--accent-green);" onclick="checkPin()"><i class="fa-solid fa-check"></i></button>
+        </div>
+        <p id="pinError" style="color: var(--accent); font-size: 0.8rem; margin-top: 10px; display: none;">PIN incorrecto. Inténtalo de nuevo.</p>
+      </div>
+
+      <!-- Contenido Oculto que se desbloquea con el PIN -->
+      <div id="secretUnlockedScreen" class="secret-unlocked">
+        <div class="note-card" style="border-color: var(--accent-yellow);">
+          <h3><i class="fa-solid fa-key" style="color: var(--accent-yellow);"></i> Diario Desbloqueado</h3>
+          <p>¡Has ingresado el PIN correcto! Aquí puedes colocar contenido privado, fotos secretas, enlaces a proyectos personales o notas íntimas.</p>
+        </div>
+
+        <div class="sticky-note" style="background: #fca5a5; transform: rotate(-1deg);">
+          🔒 Esta es una nota súper secreta que solo tú o las personas con el código pueden leer.
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <button onclick="lockAgain()" class="key-btn" style="padding: 8px 18px; font-size: 0.85rem; width: auto;">
+            <i class="fa-solid fa-lock"></i> Volver a bloquear
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 1. NAVEGACIÓN POR PESTAÑAS
+    function switchTab(tabId, buttonElement) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      buttonElement.classList.add('active');
+    }
+
+    // 2. REPRODUCTOR DE MÚSICA Y VISUALIZADOR
+    const audio = document.getElementById('bgAudio');
+    const playIcon = document.getElementById('playIcon');
+    const visualizer = document.getElementById('visualizer');
+
+    function toggleMusic() {
+      if (audio.paused) {
+        audio.play().then(() => {
+          playIcon.className = 'fa-solid fa-pause';
+          visualizer.classList.add('active');
+        }).catch(err => {
+          console.log("Error al reproducir audio:", err);
+        });
+      } else {
+        audio.pause();
+        playIcon.className = 'fa-solid fa-play';
+        visualizer.classList.remove('active');
+      }
+    }
+
+    // 3. COPIAR CORREO AL PORTAPAPELES
+    function copiarCorreo(correo) {
+      navigator.clipboard.writeText(correo);
+      const texto = document.getElementById('correoTexto');
+      texto.innerText = "¡Copiado!";
+      setTimeout(() => {
+        texto.innerText = "Copiar mi Correo";
+      }, 2000);
+    }
+
+    // 4. LÓGICA DEL PIN SECRETO
+    const CORRECT_PIN = "1234"; // <-- Cambia tu PIN aquí
+    let currentInput = "";
+
+    function pressKey(num) {
+      if (currentInput.length < 4) {
+        currentInput += num;
+        updatePinDisplay();
+      }
+      if (currentInput.length === 4) {
+        checkPin();
+      }
+    }
+
+    function clearPin() {
+      currentInput = "";
+      updatePinDisplay();
+      document.getElementById('pinError').style.display = 'none';
+    }
+
+    function updatePinDisplay() {
+      const display = document.getElementById('pinDisplay');
+      let text = "";
+      for (let i = 0; i < 4; i++) {
+        text += currentInput[i] ? "●" : "-";
+      }
+      display.innerText = text;
+    }
+
+    function checkPin() {
+      const errorMsg = document.getElementById('pinError');
+      if (currentInput === CORRECT_PIN) {
+        document.getElementById('pinLockScreen').style.display = 'none';
+        document.getElementById('secretUnlockedScreen').style.display = 'block';
+        errorMsg.style.display = 'none';
+      } else {
+        errorMsg.style.display = 'block';
+        currentInput = "";
+        updatePinDisplay();
+      }
+    }
+
+    function lockAgain() {
+      currentInput = "";
+      updatePinDisplay();
+      document.getElementById('secretUnlockedScreen').style.display = 'none';
+      document.getElementById('pinLockScreen').style.display = 'block';
+    }
+  </script>
 </body>
 </html>
